@@ -4,7 +4,7 @@ class CartItem extends React.Component {
         return(
             <div className="cart-item">
             <div className="left-block">
-            <img style={styles.image}/>
+            <img alt="" style={styles.image}/>
             </div>
             <div className="right-block">
             <div style={ { fontSize: 25 } }>Phone</div>
@@ -12,6 +12,7 @@ class CartItem extends React.Component {
             <div style={ { color:'#777' } }>Qty: 1</div>
             <div className="cart-item-actions">
                 {/* Buttons */}
+
             </div>
             </div>
             </div>
