@@ -1,6 +1,6 @@
 import React from 'react';
 
-class CartItem extends React.Component {
+const CartItem = (props) => {
     
     // constructor(){
     //     super();
@@ -26,47 +26,48 @@ class CartItem extends React.Component {
     // });
     // }
 
-    increaseQuantity=()=>{
-        //this.state.qty +=1;
-        // console.log('test',this.state);
-        // setState form 1
-        // this.setState({
-        //     qty:  this.state.qty+1
-        // });
+    // increaseQuantity=()=>{
+    //     //this.state.qty +=1;
+    //     // console.log('test',this.state);
+    //     // setState form 1
+    //     // this.setState({
+    //     //     qty:  this.state.qty+1
+    //     // });
 
-        // setState form 2
-        this.setState((prevState)=>{
-            return {
-                qty: prevState.qty+1
-            }
-        },()=>{
-            console.log('this.state',this.state);
-        });
-    }
+    //     // setState form 2
+    //     this.setState((prevState)=>{
+    //         return {
+    //             qty: prevState.qty+1
+    //         }
+    //     },()=>{
+    //         console.log('this.state',this.state);
+    //     });
+    // }
 
-    decreaseQuantity=()=>{
-        // this.setState({
-        //     qty: this.state.qty-1
-        // });
-        const { qty }=this.state;
-        if(qty===0){
-            return;
-        }
+    // decreaseQuantity=()=>{
+    //     // this.setState({
+    //     //     qty: this.state.qty-1
+    //     // });
+    //     const { qty }=this.state;
+    //     if(qty===0){
+    //         return;
+    //     }
 
-        this.setState((prevState)=>{
-            return {
-                qty: prevState.qty-1
-            }
-        });
-    }
-    render() {
+    //     this.setState((prevState)=>{
+    //         return {
+    //             qty: prevState.qty-1
+    //         }
+    //     });
+    // }
+   
         
-        console.log('this.props',this.props)
-        const {price,title,qty}=this.props.product;
+        // console.log('this.props',this.props)
+        const {price,title,qty}=props.product;
+        const {product, onIncreaseQuantity, onDecreaseQuantity,onDeleteProduct}=props;
         return(
             <div className="cart-item">
             <div className="left-block">
-            <img alt="" style={styles.image}/>
+            <img alt="" style={styles.image} src={product.img}/>
             </div>
             <div className="right-block">
             <div style={ { fontSize: 25 } }>{title}</div>
@@ -75,16 +76,33 @@ class CartItem extends React.Component {
             <div className="cart-item-actions">
                 {/* Buttons */}
 
-                <img alt="increase" className="action-icons" src="https://t4.ftcdn.net/jpg/01/26/10/59/240_F_126105961_6vHCTRX2cPOnQTBvx9OSAwRUapYTEmYA.jpg" onClick={this.increaseQuantity}></img>
-                <img alt="decrease" className="action-icons" src="https://t3.ftcdn.net/jpg/03/73/49/86/240_F_373498649_nBxauQ0ipBSVrVcMpWWVmTpXu3BLvRyY.jpg" onClick={this.decreaseQuantity}></img>
-                <img alt="delete" className="action-icons" src="https://cdn-icons-png.flaticon.com/128/6861/6861362.png"></img>
+                <img 
+                alt="increase" 
+                className="action-icons" 
+                src="https://t4.ftcdn.net/jpg/01/26/10/59/240_F_126105961_6vHCTRX2cPOnQTBvx9OSAwRUapYTEmYA.jpg" 
+                onClick={()=>onIncreaseQuantity(product)}
+                />
+
+                <img 
+                alt="decrease" 
+                className="action-icons" 
+                src="https://t3.ftcdn.net/jpg/03/73/49/86/240_F_373498649_nBxauQ0ipBSVrVcMpWWVmTpXu3BLvRyY.jpg" 
+                onClick={()=>onDecreaseQuantity(product)}
+                />
+
+                <img 
+                alt="delete" 
+                className="action-icons" 
+                src="https://cdn-icons-png.flaticon.com/128/6861/6861362.png"
+                onClick={()=>onDeleteProduct(product.id)}
+                />
 
             </div>
             </div>
             </div>
             
         );
-    }
+    
 }
 
 const styles={
