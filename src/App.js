@@ -8,8 +8,26 @@ class App extends React.Component {
   constructor(){
     super();
     this.state={
-        products: []
-    }
+        products: [],
+        loading: true
+
+    };
+}
+
+componentDidMount(){
+  firebase
+  .firestore()
+  .collection("products")
+  .get()
+  .then(snapshot=>{
+    const products=snapshot.docs.map(doc=>{
+      const data=doc.data();
+      data["id"]=doc.id;
+      return data;
+    });
+    this.setState({products: products,loading:false});
+
+  });
 }
 handleIncreaseQuantity=(product)=>{
     console.log('Heyy please increase int the quantity of',product);
@@ -30,23 +48,23 @@ handleDecreaseQuantity=(product)=>{
     products[index].qty-=1;
     this.setState({
         products:products
-    })
-}
+    });
+};
 handleDeleteProduct=(id)=>{
     const {products}=this.state;
-    const items=products.filter((item)=>item.id!==id);//[{}]
+    const items=products.filter(product=>product.id!==id);
     this.setState({
         products: items
-    })
-}
-getCartCount=()=>{
+    });
+};
+getcountOfCartItems=()=>{
   const{products}=this.state;
   let count=0;
   products.forEach((product)=>{
     count+=product.qty;
-  })
+  });
   return count;
-}
+};
 
   getCartTotal=()=>{
     const{products}=this.state;
@@ -55,23 +73,27 @@ getCartCount=()=>{
       if(product.qty>0){
       cartTotal=cartTotal+product.qty*product.price;
       }
-    return '';
+    return "";
   });
 
     return cartTotal;
-  }
+  };
+
   render(){
-    const {products}=this.state
+    const {products,loading}=this.state
   return (
     <div className="App">
       <Navbar count={this.getCartCount()}/>
       <Cart
-      products={products}
       onIncreaseQuantity={this.handleIncreaseQuantity}
       onDecreaseQuantity={this.handleDecreaseQuantity}
       onDeleteProduct={this.handleDeleteProduct}
+      products={products}
       />
-      <div style={{padding:10,fontSize:20}}>TOTAL: {this.getCartTotal()}</div>
+      {loading && <h1>Loading Products...</h1>}
+      <div style={{padding:10,fontSize:20}}>
+        TOTAL: {this.getCartTotal()}
+        </div>
     </div>
   );
   }

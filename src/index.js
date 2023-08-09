@@ -1,10 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from "react-dom";
 import './index.css';
 import App from './App';
-import * as firebase from 'firebase';
-// import * as serviceWorker from './serviceWorker';
-import 'firebase/firestore';
+import * as serviceWorker from "./serviceWorker";
+// import * as firebase from "firebase";
+// import "firebase/firestore";
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import 'firebase/compat/auth';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,11 +20,8 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+firebase.initializeApp(firebaseConfig);
+ReactDOM.render(<App />, document.getElementById("root"));
 
+
+serviceWorker.unregister();

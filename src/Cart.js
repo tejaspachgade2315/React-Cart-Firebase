@@ -4,20 +4,18 @@ const Cart=(props)=> {
     const { products }=props;
     return(
         <div className="cart">
-            {products.map((product)=>{
-                return (
+            {products.map((product)=>(
                 <CartItem
-                product={product}
-                    key={product.id}
+                key={product.id}
+                    product={product}
                     onIncreaseQuantity={props.onIncreaseQuantity}
                     onDecreaseQuantity={props.onDecreaseQuantity}
                     onDeleteProduct={props.onDeleteProduct}
                 />
-                )
-            })}
+                ))}
             
         </div>
-    );
+    )
     }
     
 
